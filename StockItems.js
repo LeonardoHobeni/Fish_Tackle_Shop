@@ -109,9 +109,32 @@ class StockItems{
             else
             {
                 var propElement= document.getElementById(item);
-                propElement= this[item];
+                propElement.value= this[item];
             }
         }
+    }
+
+    JSONstringify()
+    {
+        return JSON.stringify(this);
+    }
+
+    static JSONparse(text)
+    {
+        var strObj= JSON.parse(text);
+        var result;
+
+        switch(strObj.type)
+        {
+            case 'aerosol':
+                result= new Aerosol();
+                break;
+            case 'backpack':
+                result= new BackPack();
+                break;
+        }
+        Object.assign(result, strObj);
+        return result;
     }
 }
 
@@ -142,7 +165,7 @@ class Aerosol extends StockItems{
     }
 }
 
-class Backpack extends StockItems{
+class BackPack extends StockItems{
     constructor(stockLevel, stockRef, price, brand, description, packageWeight,
         design, color)
     {
@@ -168,6 +191,6 @@ class Backpack extends StockItems{
     getHTML(containerElement)
     {
         super.getHTML(containerElement);
-        StockItems.buildHTMLStockELement(containerElement, Backpack.backpackSchema);
+        StockItems.buildHTMLStockELement(containerElement, BackPack.backpackSchema);
     }
 }
