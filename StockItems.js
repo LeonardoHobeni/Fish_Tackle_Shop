@@ -85,6 +85,34 @@ class StockItems{
     {
         StockItems.buildHTMLStockELement(containerElement, StockItems.stockSchema);
     }
+
+    loadFromHTML()
+    {
+        for(let item in this)
+        {
+            if(item == 'stockRef' || item == 'type')
+                continue;
+            else
+            {
+                var propElement= document.getElementById(item);
+                this[item]= propElement.value;
+            }
+        }
+    }
+
+    sendToHTML()
+    {
+        for(let item in this)
+        {
+            if(item == 'stockRef' || item == 'type')
+                continue;
+            else
+            {
+                var propElement= document.getElementById(item);
+                propElement= this[item];
+            }
+        }
+    }
 }
 
 class Aerosol extends StockItems{

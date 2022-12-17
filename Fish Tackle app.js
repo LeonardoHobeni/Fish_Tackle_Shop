@@ -99,6 +99,14 @@ function addStockItem(StockItem)
     );
 }
 
+function doSaveAdd()
+{
+    activeItem.loadFromHTML();
+    activeItem.stockRef= StockItems.getLargestStockRef(dataStore)+1;
+    dataStore[dataStore.length]= activeItem;
+    alert(activeItem.type+ ' '+activeItem.stockRef+" added");
+}
+
 function showMenu(schema)
 {
     for(let item of schema)
