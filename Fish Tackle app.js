@@ -65,10 +65,35 @@ function doUpdateStock()
     mainPage.appendChild(inputPar);
     showMenu(
         [
-            {capt: 'Find item', label: 'Find', func: 'doFindItem()'},
+            {capt: 'Find item', label: 'Find', func: 'doFind()'},
             {capt: 'Cancel update', label: 'Cancel', func: 'doCancelUpdate()'},
         ]
     );
+}
+
+function doFind()
+{
+    var itemElement= document.getElementById('reference');
+    activeItem= doFindItem(itemElement.value);
+    if(activeItem !== null)
+    {
+        activeItem.sendToHTML();
+    }
+    else
+    {
+        alert("Item of reference "+itemElement.value+" not found");
+        doShowMenu();
+    }
+}
+
+function doFindItem(refer)
+{
+    for(let item of dataStore)
+    {
+        if(item.stockRef == Number(refer))
+            return item;
+    }
+    return null;
 }
 
 function doCancelUpdate()
