@@ -86,6 +86,50 @@ function doShowMenu()
     );
 }
 
+function displayDataAnalysisMenu()
+{
+    openPage('Analysis Menu');
+    showMenu(
+        [
+            {capt: 'Order by price', label: 'Price', func: 'doOrderByPrice()'},
+            {capt: 'Order by stock level', label: 'Stock Level', func: 'doOrderByStockLevel()'},
+            {capt: 'Order by investment', label: 'Investment', func: 'doOrderByInvestment()'},
+            {capt: 'Zero stock item list', label: 'Zero Stock', func: 'doListZeroStockList()'},
+            {capt: 'Total Stock value', label: 'Total', func: 'displayTotalStockValue()'},
+            {capt: 'Go back to main', label: 'Main menu', func: 'doShowMenu()'},
+        ]
+    );
+}
+
+function displayTotalStockValue()
+{
+    var total= dataStore.reduce(
+        (total, item) => total+(item.price*item.stockLevel),0
+    );
+    alert('Total stock value is '+total);
+}
+
+function doListZeroStockList()
+{
+    var zeroStockListItem= dataStore.filter((a) => {return a.stockLevel == 0});
+    createList('Zero stock items', zeroStockListItem); 
+}
+
+function doOrderByInvestment()
+{
+    dataStore.sort((a,b) => {return b.price*b.stockLevel - a.price*a.stockLevel});
+}
+
+function doOrderByStockLevel()
+{
+    dataStore.sort((a,b) => {return a.stockLevel - b.stockLevel});
+}
+
+function doOrderByPrice()
+{
+    dataStore.sort((a,b) => {return b.price - a.price});
+}
+
 function doApplyDiscount()
 {
     dataStore.map((item) => item.price=(item.price)*0.90);
