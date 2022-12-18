@@ -1,0 +1,90 @@
+body
+{
+    background-color:lavender;
+}
+.mainHeading
+{
+    font-size: 6em;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background: teal;
+    color: lavender;
+    text-shadow: 4px 4px 0 blue;
+    text-align: center;
+}
+
+.mainTitle
+{
+    font-size: 4em;
+    background: teal;
+    color: lavender;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-right: 1000px;
+}
+
+.mainLabel, .mainButton, .inputLabel, .inputText, .inputTextArea
+{
+    font-size: 2em;
+    color:royalblue;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.inputText, .inputTextArea
+{
+    border-radius: 6px;
+    background-color:rgb(255, 250, 190) ;
+}
+
+.inputTextArea
+{
+    width: 600px;
+    height: 200px;
+}
+
+.inputLabel
+{
+    display: inline-block;
+    vertical-align: top;
+    width: 6em;
+}
+
+.btnPar
+{
+    background-color: lavender;
+
+}
+
+.mainButton
+{   
+    margin: 2px;
+    border-color: royalblue;
+    width: 8em;
+    background-color: rgb(255, 250, 190);
+    border-radius: 10px;
+}
+
+.mainLabel
+{
+    margin:2px;
+    display: inline-block;
+    width: 10em;
+}
+
+.listBtn
+{
+    margin: 2px;
+    border-color: royalblue;
+    background-color: rgb(255, 250, 190);
+    border-radius: 10px;
+}
+
+.listDesc
+{
+    background: rgb(255, 250, 190);
+    color: rgb(7, 98, 98);
+    width:15em;
+}
+
+.listPar
+{   margin: 0;
+    font-size: 1.5em;
+}

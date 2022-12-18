@@ -13,11 +13,11 @@ class StockItems{
     getDescription()
     {
         var result= "Ref:"+this.stockRef
-            +" Price:"+this.price
-            +" Description:"+this.description
-            +" Brand:"+this.brand
-            +" Stock:"+this.stockLevel
-            +" Weight:"+this.packageWeight;
+            +"\nPrice:"+this.price
+            +"\nDescription:"+this.description
+            +"\nBrand:"+this.brand
+            +"\nStock:"+this.stockLevel
+            +"\nWeight:"+this.packageWeight;
         return result;
     }
 
@@ -150,7 +150,7 @@ class Aerosol extends StockItems{
     getDescription()
     {
         var result= super.getDescription()
-            +" Scent:"+this.scent;
+            +"\nScent:"+this.scent;
         return result;
     }
 
@@ -178,8 +178,8 @@ class BackPack extends StockItems{
     getDescription()
     {
         var result= super.getDescription()
-            +" Design:"+this.design
-            +" Color:"+this.color;
+            +"\nDesign:"+this.design
+            +"\nColor:"+this.color;
         return result;
     }
 

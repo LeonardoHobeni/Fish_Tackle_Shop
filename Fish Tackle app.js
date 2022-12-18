@@ -207,6 +207,11 @@ function doListStockItems()
 function createList(title, dataStore)
 {
     openPage(title);
+    showMenu(
+        [
+            {capt: 'Back to main menu', label: 'Main Menu', func: 'doShowMenu()'},
+        ]
+    );
     for(let item of dataStore)
     {
         var itemElement= createListElement(item);
@@ -458,6 +463,7 @@ function showMenu(schema)
 function createOperationButton(item)
 {
     var btnPar= document.createElement('p');
+    btnPar.className='btnPar';
 
     //create label
     var btnLabel= document.createElement('label');
