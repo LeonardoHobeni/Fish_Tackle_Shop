@@ -80,9 +80,16 @@ function doShowMenu()
             {capt: 'Update Stock item', label: 'Update', func: 'doUpdateStock()'},
             {capt: 'Delete stock item', label: 'Delete item', func: 'doDeleteStock()'},
             {capt: 'List stock items', label: 'List', func: 'doListStockItems()'},
+            {capt: 'Apply discount', label: 'Discount', func: 'doApplyDiscount()'},
             {capt: 'Data Analysis', label: 'Analysis', func: 'displayDataAnalysisMenu()'},
         ]
     );
+}
+
+function doApplyDiscount()
+{
+    dataStore.map((item) => item.price=(item.price)*0.90);
+    alert('10% discount applied on all items in stock');
 }
 
 function doDeleteStock()
