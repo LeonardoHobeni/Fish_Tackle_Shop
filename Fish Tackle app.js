@@ -18,7 +18,7 @@ function doLoadData()
 {
     stringDataStore=[];
     jsonString= localStorage.getItem(storeName);
-    if(jsonString == null)
+    if(JSON.parse(jsonString) == null)
         return EMPTY_STORE;
     try
     {
@@ -77,11 +77,75 @@ function doShowMenu()
         [
             {capt: 'Add Aerosol', label: 'Aerosol', func: 'doAddAerosol()'},
             {capt: 'Add Backpack', label: 'Backpack', func: 'doAddBackPack()'},
-            {capt: 'Update Stock', label: 'Update', func: 'doUpdateStock()'},
+            {capt: 'Update Stock item', label: 'Update', func: 'doUpdateStock()'},
+            {capt: 'Delete stock item', label: 'Delete item', func: 'doDeleteStock()'},
             {capt: 'List stock items', label: 'List', func: 'doListStockItems()'},
             {capt: 'Data Analysis', label: 'Analysis', func: 'displayDataAnalysisMenu()'},
         ]
     );
+}
+
+function doDeleteStock()
+{
+    openPage('Delete stock item');
+    createReferencePanel();
+    showMenu(
+        [
+            {capt: 'Delete item', label: 'Delete', func: 'doDelete()'},
+            {capt: 'Cancel deletion', label: 'Cancel', func: 'doCancelUpdate()'},
+        ]
+    );
+    
+}
+
+function doDelete()
+{
+    var itemElement= document.getElementById('reference');
+    activeItem=doFindItem(itemElement.value);
+    if(activeItem !== null)
+    {
+        var response= confirm('Click OK button to confirm deletion');
+        if(response)
+        {
+            let tempArr=[];
+            for(let item of dataStore)
+            {
+                if(item.stockRef == activeItem.stockRef)
+                    continue;
+                else
+                {
+                    if(item.stockRef>activeItem.stockRef)
+                    {   
+                        item.stockRef= (item.stockRef-1);
+                        tempArr[tempArr.length]= item;
+                    }
+                    else
+                        tempArr[tempArr.length]= item;
+                }
+            }
+            dataStore= tempArr;
+            doSaveDataStore();
+            alert('Item: \n'+deletedItemDesc()+'\n\n Has Been Deleted');
+            doShowMenu();
+        }
+        else
+        {
+            alert('Operation Cancelled');
+            doShowMenu();
+        }
+    }
+    else
+    {
+        alert("Item of reference "+itemElement.value+" not found");
+        doShowMenu();
+    }
+}
+
+function deletedItemDesc()
+{   
+    
+    var result= activeItem.getDescription();
+    return result;
 }
 
 function doListStockItems()
@@ -105,12 +169,13 @@ function createListElement(item)
     listPar.className= 'listPar';
 
     //create button
-    var listBtn= document.createElement('button');
-    listBtn.className= 'listBtn';
-    listBtn.innerText= 'Update';
-    var doFunctionCall= "doUpdateItem('"+item.stockRef+"')";
-    listBtn.setAttribute('onclick', doFunctionCall);
-    listPar.appendChild(listBtn);
+    var doFunctionCall1= "doUpdateItem('"+item.stockRef+"')";
+    var doFunctionCall2= 'doDeleteItem("'+item.stockRef+'")';
+    var btnSchema= [
+        {label: 'Update', func: doFunctionCall1},
+        {label: 'Delete', func: doFunctionCall2},
+    ];
+    createListBtn(btnSchema, listPar);
 
     //create item description element
     var descPar= document.createElement('p');
@@ -118,6 +183,52 @@ function createListElement(item)
     descPar.innerText= item.getDescription();
     listPar.appendChild(descPar);
     return listPar;
+}
+
+function doDeleteItem(refer)
+{
+    activeItem=doFindItem(refer);
+    var response= confirm('Click OK button to confirm deletion');
+    if(response)
+    {
+        let tempArr=[];
+        for(let item of dataStore)
+        {
+            if(item.stockRef == activeItem.stockRef)
+                continue;
+            else
+            {
+                if(item.stockRef>activeItem.stockRef)
+                {   
+                    item.stockRef= (item.stockRef-1);
+                    tempArr[tempArr.length]= item;
+                }
+                else
+                    tempArr[tempArr.length]= item;
+            }
+        }
+        dataStore= tempArr;
+        doSaveDataStore();
+        alert('Item: \n'+deletedItemDesc()+'\n\n Has Been Deleted');
+        doShowMenu();
+    }
+    else
+    {
+        alert('Operation Cancelled');
+        doShowMenu();
+    }
+}
+
+function createListBtn(schema, listPar)
+{
+    for(let item of schema)
+    {
+        var listBtn= document.createElement('button');
+        listBtn.className= 'listBtn';
+        listBtn.innerText= item.label;
+        listBtn.setAttribute('onclick', item.func);
+        listPar.appendChild(listBtn);
+    }
 }
 
 function doUpdateItem(refer)
@@ -218,7 +329,14 @@ function doFindItem(refer)
 }
 
 function doCancelUpdate()
+{   
+    alert('Operation Cancelled');
+    doShowMenu();
+}
+
+function doCancelAdd()
 {
+    alert('Operation Cancelled');
     doShowMenu();
 }
 
@@ -240,7 +358,7 @@ function addStockItem(StockItem)
     showMenu(
         [
             {capt: 'Save Item', label: 'Save', func: 'doSaveAdd()'},
-            {capt: 'Cancel Item', label: 'Cancel', func: 'doShowMenu()'},
+            {capt: 'Cancel Item', label: 'Cancel', func: 'doCancelAdd()'},
         ]
     );
 }
@@ -265,8 +383,16 @@ function doSaveDataStore()
 
 function doSaveDataToLocal()
 {
-    jsonString= JSON.stringify(stringDataStore);
-    localStorage.setItem(storeName, jsonString);
+    if(stringDataStore.length>0)
+    {
+        jsonString= JSON.stringify(stringDataStore);
+        localStorage.setItem(storeName, jsonString);
+    }
+    else
+    {
+        jsonString=null;
+        localStorage.setItem(storeName, jsonString);
+    }
 }
 
 function showMenu(schema)
