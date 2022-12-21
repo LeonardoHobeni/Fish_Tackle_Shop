@@ -12,11 +12,20 @@ body
     text-align: center;
 }
 
+div
+{
+    margin: auto;
+    width: 60%;
+    border: 3px solid lavender;
+    padding: 10px;
+}
+
 .mainTitle
 {
     font-size: 4em;
     background: teal;
     color: lavender;
+    width: 50%;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin-right: 1000px;
 }
@@ -87,4 +96,7 @@ body
 .listPar
 {   margin: 0;
     font-size: 1.5em;
+    margin: 3px;
+    display: inline-block;
+    vertical-align: top;
 }
